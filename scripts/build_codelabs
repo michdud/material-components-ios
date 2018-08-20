@@ -48,8 +48,8 @@ function check_arguments() {
 #
 # Exits if the reference is not valid.
 function check_reference() {
-  branch_hash=$(git rev-parse --verify --quiet $1)
-  if [ -z $branch_hash ]; then
+  reference=$(git rev-parse --verify --quiet $1)
+  if [ -z $reference ]; then
     echo "Invalid reference name, aborting."
     exit 1
   fi
@@ -159,13 +159,10 @@ all_builds_ok=1
 
 cd $SCRIPTS_DIR/external
 # Remove the codelabs folder if it exists already so it can be re-cloned.
-#if [ -d "material-components-ios-codelabs" ]; then
-#  rm -rf material-components-ios-codelabs
-#fi
-# !!!!! UNCOMMENT ME
-# BEFORE PUSHING ANY
-# CHANGES !!!!!
-#git clone https://github.com/material-components/material-components-ios-codelabs.git
+if [ -d "material-components-ios-codelabs" ]; then
+  rm -rf material-components-ios-codelabs
+fi
+git clone https://github.com/material-components/material-components-ios-codelabs.git
 cd material-components-ios-codelabs
 
 # Build only 104 and 111 complete by default. With -a flag, build all.
